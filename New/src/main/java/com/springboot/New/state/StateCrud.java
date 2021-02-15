@@ -14,5 +14,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface StateCrud extends JpaRepository<State, String> {
-    
+
 }

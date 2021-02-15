@@ -1,161 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"
         integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+        <style>
+            .container{
+                margin : auto;
+                margin-top : 70px;
+                width: 500px
+            }
+        </style>
+    </head>
 
-</head>
+    <body>
+        <div class="container">
+            <form onsubmit="return validate()" name="myForm" action="/employee/saving" method="post">
+                <input type="hidden" value="No" id="checkingId" name="checkingId"> 
 
-<body>
-    <form onsubmit="return validate()" name="myForm" action="/employee/saving" method="post">
-        Enter your name <input name="employeeName" type="text" id="employeeName"><br>
-        Enter your code <input name="employeeId" type="text" id="employeeId"><br>
-        Select your company <select name="employeeCompanyId" id="company-option">
-            <option>[do not select now]</option>
-        </select><br>
-        Select your department <select name="employeeDepartmentId" id="department-option">
-            <option>First select your company</option>
-        </select><br>
-        Enter yor Emailid : <input type="text" name="employeeMailId" id="employeeMailID">
-        Select your Gender : Male <input type="radio" name="employeeGender"> Female <input type="radio"
-            name="employeeGender">
-        Select your hobby : Swimming <input type="checkbox" name="employeeHobby[]" value="Swimming"> Reading <input type="checkbox" name="employeeHobby[]" value="Reading"> 
-        <input type="submit" value="Click to submit">
-    </form>
+                Enter your name <input name="employeeName" type="text" id="employeeName"><br>
 
-    <script>
-        function validate() {
-            var employeeName = document.myForm.employeeName.value;
-            var employeeId = document.myForm.employeeId.value;
-            var employeeCompanyId = document.myForm.employeeCompanyId.value;
-            var employeeDepartmentId = document.myForm.employeeDepartmentId.value;
-            var employeeMailId = document.myForm.employeeMailId.value;
-            var employeeGender = documnet.myForm.employeeGender.value;
+                Enter your code <input name="employeeId" type="text" id="employeeId"><br>
 
-            if (employeeName == "") {
-                alert("Employee name cant be empty");
-                return false;
-            }
-            if (employeeId == "") {
-                alert("Employee code cant be empty");
-                return false;
-            }
-            if (employeeCompanyId == "") {
-                alert("No company is selected");
-                return false;
-            }
-            if (employeeDepartmentId == "") {
-                alert("You did'nt select any department");
-                return false;
-            }
-            if(employeeGender == ""){
-                alert("Select your Gender");
-                return false;
-            }
-            if (!/^[a-zA-Z ]+$/.test(employeeName)) {
-                alert("Name is invalid");
-                return false;
-            }
-            if (!/^[E][-][0-9]{3}$/.test(employeeId)) {
-                alert("Code is invalid (eg : E-XXX)")
-                return false;
-            }
-            if (! /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(employeeMailId)) {
-                alert("Mail id not valid");
-                return false;
+                Select your company <select name="employeeCompanyId" id="company-option">
+                    <option>[do not select now]</option>
+                </select><br>
+
+                Select your department <select name="employeeDepartmentId" id="department-option">
+                    <option>First select your company</option>
+                </select><br>
+
+                Enter your Email id : <input type="text" name="employeeMailId" id="employeeMailID"><br>
+
+                Select your Gender : Male <input type="radio" name="employeeGender" value="Male"> 
+                Female <input type="radio" name="employeeGender" value="Female"><br>
+
+                Select your hobby : Swimming <input type="checkbox" name="employeeHobby[]" value="Swimming"> 
+                Reading <input type="checkbox" name="employeeHobby[]" value="Reading">
+                Other <input type="checkbox" name="employeeHobby[]" value="Other" ><br>
+
+                <input type="submit" value="Click to submit">
+
+                <div style="margin-top :80px">
+                    <div style="margin-top :80px">
+                        <a href="/employee/displayAllEmployee"> Get all Employee </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <script>
+            function validate() {
+                var employeeName = document.myForm.employeeName.value;
+                var employeeId = document.myForm.employeeId.value;
+                var employeeCompanyId = document.myForm.employeeCompanyId.value;
+                var employeeDepartmentId = document.myForm.employeeDepartmentId.value;
+                var employeeMailId = document.myForm.employeeMailId.value;
+                var employeeGender = document.myForm.employeeGender.value;
+                var checkingId = document.myForm.checkingId.value;
+
+                if (employeeName == "") {
+                    alert("Employee name cant be empty");
+                    return false;
+                }
+                if (employeeId == "") {
+                    alert("Employee code cant be empty");
+                    return false;
+                }
+                if (employeeCompanyId == "") {
+                    alert("No company is selected");
+                    return false;
+                }
+                if (employeeDepartmentId == "") {
+                    alert("You did'nt select any department");
+                    return false;
+                }
+                if (employeeGender == "") {
+                    alert("Select your Gender");
+                    return false;
+                }
+                if (checkingId == "Yes") {
+                    alert("Id already in use . Change your id");
+                    return false;
+                }
+                if (!/^[a-zA-Z ]+$/.test(employeeName)) {
+                    alert("Name is invalid");
+                    return false;
+                }
+                if (!/^[E][-][0-9]{3}$/.test(employeeId)) {
+                    alert("Code is invalid (eg : E-XXX)")
+                    return false;
+                }
+                if (!/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(employeeMailId)) {
+                    alert("Mail id not valid");
+                    return false;
+                }
+
+                document.myForm.employeeName.value = employeeName.trim().toLowerCase();
+                return true;
             }
 
-            document.myForm.employeeName.value = employeeName.trim().toLowerCase();
-            return true;
-        }
-
-        $(document).ready(function () {
-            var json = {
-                "attribute": "company"
-            };
-            $.ajax({
-                type: "POST",
-                contentType: "application/json",
-                url: "/company/loadAllCompany",
-                data: JSON.stringify(json),
-                success: function (data) {
+            $(document).ready(function () {
+                $.get('/company/getAllCompany', function (data, textStatus, jqXHR) {
                     var html = '';
                     var len = data.length;
                     html += '<option value=""></option>';
                     for (var i = 0; i < len; i++) {
                         html += '<option value="' + data[i].companyId + '">'
-                            + data[i].companyName
-                            + '</option>';
+                                + data[i].companyName
+                                + '</option>';
                     }
                     $('#company-option').html(html);
-                }
-            });
-
-            $("#company-option").change(function () {
-                var attribute = $(this).val();
-                var json = {
-                    "attribute": attribute
-                };
-                $.ajax({
-                    type: "POST",
-                    contentType: "application/json",
-                    url: "/department/loadAllDepartment",
-                    data: JSON.stringify(json),
-                    success: function (data) {
+                });
+                $("#company-option").change(function () {
+                    var attribute = $(this).val();
+                    $.get('/department/getAllDepartmentByCompanyId', {companyId : attribute}, function (data, textStatus, jqXHR) {
                         var html = '';
                         var len = data.length;
                         html += '<option value=""></option>';
                         for (var i = 0; i < len; i++) {
                             html += '<option value="' + data[i].departmentId + '">'
-                                + data[i].departmentName
-                                + '</option>';
+                                    + data[i].departmentName
+                                    + '</option>';
                         }
                         $('#department-option').html(html);
-                    }
+                    });
+                });
+                $("#employeeName").change(function () {
+                    var attribute = $(this).val();
+
+                    $.get('/employee/checkEmployeeName', {employeeName: attribute}, function (data, textStatus, jqXHR) {
+                        if (data == "NOT FOUND") {
+                            $("#employeeId").attr("readonly", false);
+                            $("#employeeId").attr("value", "Type a new Employee Code");
+
+
+                        } else {
+                            $("#employeeId").attr("readonly", false);
+                            $("#employeeId").attr("value", data);
+                            $("#employeeId").attr("readonly", true);
+
+                        }
+                    });
+
+                });
+                $("#employeeId").change(function () {
+                    var attribute = $(this).val();
+                    var attribute2 = $("#employeeName").val().trim().toLowerCase();
+
+                    $.get('/employee/isEmployeeIdAvailable', {employeeId: attribute, employeeName: attribute2}, function (data, textStatus, jqXHR) {
+                        if (data == "Yes") {
+                            $("#checkingId").val("Yes");
+
+                        } else {
+                            $("#checkingId").val("No");
+                        }
+                    });
+
                 });
 
-            })
-        });
-        $("#employeeName").change(function () {
-            var attribute = $(this).val();
-
-            var json = {
-                "attribute": attribute
-            };
-            $.ajax({
-                type: "POST",
-                contentType: "application/json",
-                url: "/employee/checkEmployeeName",
-                data: JSON.stringify(json),
-                success: function (data) {
-                    if (data[0] == "NOT FOUND") {
-                        $("#employeeId").attr("readonly", false);
-                        $("#employeeId").attr("value", "Type a new Employee Code");
-
-
-                    } else {
-                        $("#employeeId").attr("readonly", false);
-                        $("#employeeId").attr("value", data);
-                        $("#employeeId").attr("readonly", true);
-
-                    }
-                },
-                error: function (e) {
-                    console.log(e);
-                }
-
             });
+        </script>
 
-        });
-
-
-    </script>
-
-</body>
+    </body>
 
 </html>

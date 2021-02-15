@@ -5,20 +5,16 @@
  */
 package com.springboot.New.country;
 
-import com.springboot.New.state.State;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author oss
- */ 
+ */
 @Repository
 public interface CountryCrud extends JpaRepository<Country, String> {
-    
-    
-    
+
     public List<Country> findCountryStateListByCountryId(String countryId);
 }

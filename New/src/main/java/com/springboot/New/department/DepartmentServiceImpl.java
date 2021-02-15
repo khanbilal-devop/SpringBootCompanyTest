@@ -14,14 +14,14 @@ import org.springframework.stereotype.Service;
  * @author oss
  */
 @Service
-public class DepartmentServiceImpl implements DepartmentService{
-    
+public class DepartmentServiceImpl implements DepartmentService {
+
     @Autowired
     DepartmentDaoImpl departmentDaoImpl;
-    
+
     @Override
-    public void save(Department department,String departmentCompanyId) {
-        departmentDaoImpl.save(department,departmentCompanyId);
+    public void saveDepartment(Department department, String departmentCompanyId) {
+        departmentDaoImpl.saveDepartment(department, departmentCompanyId);
 
     }
 
@@ -29,5 +29,14 @@ public class DepartmentServiceImpl implements DepartmentService{
     public String findIdByDepartmentName(String departmentName) {
         return departmentDaoImpl.findIdByDepartmentName(departmentName);
     }
-    
+
+    @Override
+    public List<Department> getAllDepartment() {
+        return departmentDaoImpl.getAllDepartment();
+    }
+
+    public String isDepartmentIdAvailable(String departmentId,String departmentName){
+          return departmentDaoImpl.isDepartmentIdAvailable(departmentId,departmentName);
+    }
+
 }

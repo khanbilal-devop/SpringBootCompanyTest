@@ -2,6 +2,13 @@
 <html lang="en">
 
     <head>
+        <style>
+            .container{
+                margin : auto;
+                margin-top : 70px;
+                width: 500px
+            }
+        </style>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,19 +18,26 @@
     </head>
 
     <body>
-        <form onsubmit="return validate()" name="myForm" action="/department/saving" method="post">
-            Enter the department : <input type="text" name="departmentName" id="departmentName"><br>
-            Enter the department Id : <input type="text" name="departmentId" id="department_Id"><br>
-            Select the company : <select id="company-option" name="departmentCompanyId">
-                <option>-------</option>
-            </select><br> 
-            <input type="submit" value="Click to submit">
-        </form>
+        <div class="container">
+            <form onsubmit="return validate()" name="myForm" action="/department/saving" method="post">
+                <input type="hidden" value="No" id="checkingId" name="checkingId"> 
+                Enter the department : <input type="text" name="departmentName" id="departmentName"><br>
+                Enter the department Id : <input type="text" name="departmentId" id="department_Id"><br>
+                Select the company : <select id="company-option" name="departmentCompanyId">
+                    <option>-------</option>
+                </select><br> 
+                <input type="submit" value="Click to submit">
+            </form>
+              <div style="margin-top :80px">
+                <a href="/department/displayAllDepartment"> Get all Department </a>
+            </div>
+        </div>
         <script>
             function validate() {
                 var departmentName = document.myForm.departmentName.value;
                 var departmentId = document.myForm.departmentId.value;
                 var departmentCompanyId = document.myForm.departmentCompanyId.value;
+                 var checkingId = document.myForm.checkingId.value;
                 if (departmentName == "") {
                     alert("Department name can't be empty");
                     document.myForm.departmentName.focus();
@@ -36,6 +50,10 @@
                 }
                 if (departmentCompanyId == "") {
                     alert("No company is selected");
+                    return false;
+                }
+                if(checkingId == "Yes"){
+                    alert("Id already in use . Change your id");
                     return false;
                 }
                 if (!/^[a-zA-Z .]+$/.test(departmentName)) {
@@ -54,68 +72,48 @@
             }
 
             $(document).ready(function () {
-
-                var json = {
-                    "attribute": "companyId"
-                };
-                $.ajax({
-                    type: "POST",
-                    contentType: "application/json",
-                    url: "/company/loadAllCompany",
-                    data: JSON.stringify(json),
-                    success: function (data) {
-                        var html = '';
-                        var len = data.length;
-                        html += '<option value=""></option>';
-                        for (var i = 0; i < len; i++) {
-                            html += '<option value="' + data[i].companyId + '">'
-                                    + data[i].companyName
-                                    + '</option>';
-                        }
-                        $('#company-option').html(html);
-                    },
-                    error : function(e){
-                   
-                        console.log(e)
+                $.get('/company/getAllCompany', function (data, textStatus, jqXHR) {
+                    var html = '';
+                    var len = data.length;
+                    html += '<option value=""></option>';
+                    for (var i = 0; i < len; i++) {
+                        html += '<option value="' + data[i].companyId + '">'
+                                + data[i].companyName
+                                + '</option>';
                     }
-                    
-                       
-                    });
-                     
+                    $('#company-option').html(html);
                 });
-
                 $("#departmentName").change(function () {
                     var attribute = $(this).val();
+                    $.get('/department/checkDepartmentName', {departmentName : attribute}, function (data, textStatus, jqXHR) {
+                        if (data == "NOT FOUND") {
+                            $("#department_Id").attr("readonly", false);
+                            $("#department_Id").attr("value", "Not Found");
 
-                    var json = {
-                        "attribute": attribute
-                    };
-                    $.ajax({
-                        type: "POST",
-                        contentType: "application/json",
-                        url: "/department/checkDepartmentName",
-                        data: JSON.stringify(json),
-                        success: function (data) {
-                            if (data == "NOT FOUND") {
-                                $("#department_Id").attr("readonly", false);
-                                $("#department_Id").attr("value", "Not Found");
+                        } else {
+                            $("#department_Id").attr("readonly", false);
+                            $("#department_Id").attr("value", data);
+                            $("#department_Id").attr("readonly", true);
 
-                            } else {
-                                $("#department_Id").attr("readonly", false);
-                                $("#department_Id").attr("value", data);
-                                $("#department_Id").attr("readonly", true);
-
-                            }
-                        },
-                        error: function (e) {
-              
-                            console.log(e);
                         }
+                    });
+                });
+                  $("#department_Id").change(function () {
+                    var attribute = $(this).val();
+                    var attribute2 = $("#departmentName").val().trim().toLowerCase();
+                    
+                    $.get('/department/isDepartmentIdAvailable', {departmentId : attribute,departmentName : attribute2 }, function (data, textStatus, jqXHR) {
+                      if (data == "Yes") {
+                            $("#checkingId").val("Yes");
 
+                        } else {
+                           $("#checkingId").val("No");
+                        }
                     });
 
                 });
-            
+            });
+
         </script>
     </body>
 

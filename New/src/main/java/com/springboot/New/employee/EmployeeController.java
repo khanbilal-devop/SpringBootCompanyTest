@@ -5,26 +5,22 @@
  */
 package com.springboot.New.employee;
 
-import com.springboot.New.*;
-import com.springboot.New.department.Department;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import java.util.ArrayList;
 import com.springboot.New.comapny.CompanyServiceImpl;
+import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
-
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.stereotype.Controller;
 
 /**
  *
  * @author oss
  */
-@org.springframework.stereotype.Controller
+@Controller
 @RequestMapping("/employee")
 public class EmployeeController {
 
@@ -35,11 +31,10 @@ public class EmployeeController {
 
     @GetMapping("/register")
     public ModelAndView employeeRegister(ModelAndView modelAndView) {
-        try{
-        modelAndView.setViewName("employee.html");
-        return modelAndView;
-        }
-        catch(Exception e){
+        try {
+            modelAndView.setViewName("employee.html");
+            return modelAndView;
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
         }
@@ -47,31 +42,52 @@ public class EmployeeController {
 
     @PostMapping("/saving")
     public ModelAndView saveEmployee(Employee employee, ModelAndView modelAndView) {
-        try{
-        System.out.println(employee.getEmployeeHobby() + " this is employee hobby ");
-        employeeServiceImpl.save(employee);
-        modelAndView.setViewName("employee.html");
+        try {
+            employeeServiceImpl.saveEmployee(employee);
+            modelAndView.setViewName("employee.html");
+            return modelAndView;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    @GetMapping("/checkEmployeeName")
+    public @ResponseBody
+    String checkEmployeeName(@RequestParam String employeeName) {
+        try {
+            return (employeeServiceImpl.checkEmployeeName(employeeName.trim().toLowerCase())).toUpperCase();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    @GetMapping("/getAllEmployee")
+    public @ResponseBody
+    List<Employee> getAllEmployee() {
+        try {
+            return employeeServiceImpl.getAllEmployee();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    @GetMapping("/displayAllEmployee")
+    public ModelAndView displayAllEmployee(ModelAndView modelAndView) {
+        modelAndView.setViewName("employeeDisplay.html");
         return modelAndView;
-        }
-        catch(Exception e){
+    }
+
+    @GetMapping("/isEmployeeIdAvailable")
+    public @ResponseBody
+    String isEmployeeIdAvailable(@RequestParam String employeeId, @RequestParam String employeeName) {
+        try {
+            return employeeServiceImpl.isEmployeeIdAvailable(employeeId, employeeName);
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
         }
     }
-
-    @PostMapping(value = "/checkEmployeeName", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public List<String> checkEmployeeName(@RequestBody Json json) {
-        try{
-        List<String> employeeIdList = new ArrayList<String>();
-        employeeIdList.add((employeeServiceImpl.checkEmployeeName(json.getAttribute().trim().toLowerCase())).toUpperCase());
-        return employeeIdList;
-        }
-        catch(Exception e){
-            System.out.println(e.getMessage());
-            return null;
-        }
-    }
-
-
 }

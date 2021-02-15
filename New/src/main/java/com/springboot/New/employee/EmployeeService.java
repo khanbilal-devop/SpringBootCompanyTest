@@ -12,6 +12,12 @@ import java.util.List;
  * @author oss
  */
 public interface EmployeeService {
-    public void save(Employee employee);
+
+    public void saveEmployee(Employee employee);
+
     public String checkEmployeeName(String employeeName);
+    
+    public List<Employee> getAllEmployee();
+    
+     public String isEmployeeIdAvailable(String employeeId,String employeeName);
 }

@@ -13,15 +13,15 @@ import org.springframework.stereotype.Repository;
 /**
  *
  * @author oss
- */ 
+ */
 @Repository
-public class CountryDaoImpl implements CountryDao{
-    
+public class CountryDaoImpl implements CountryDao {
+
     @Autowired
     CountryCrud countryCrud;
-    
-    public void saveAllCountry(List<Country> countryList){
-       countryCrud.saveAll(countryList);
+
+    public void saveAllCountry(List<Country> countryList) {
+        countryCrud.saveAll(countryList);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class CountryDaoImpl implements CountryDao{
 
     @Override
     public List<State> checkCountryId(String countryId) {
-      return  countryCrud.findCountryStateListByCountryId(countryId).get(0).getCountryStateList();
+        return countryCrud.findCountryStateListByCountryId(countryId).get(0).getCountryStateList();
     }
-    
+
 }

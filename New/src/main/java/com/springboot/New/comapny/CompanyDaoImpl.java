@@ -5,12 +5,8 @@
  */
 package com.springboot.New.comapny;
 
-import com.springboot.New.*;
 import com.springboot.New.department.Department;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -20,16 +16,23 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class CompanyDaoImpl implements CompanyDao {
+
     @Autowired
     private CompanyCrud companyCrud;
-    
-    public Company save(Company company){
+
+    /**
+     *
+     * @param company
+     * @return
+     */
+    @Override
+    public Company saveCompany(Company company) {
         return companyCrud.save(company);
     }
 
     @Override
     public List<Company> getAllCompany() {
-                return companyCrud.findAll();
+        return companyCrud.findAll();
     }
 
     @Override
@@ -39,14 +42,27 @@ public class CompanyDaoImpl implements CompanyDao {
     }
 
     @Override
-    public String checkCompanyName(String companyName){
-                  List<Company> companyList= companyCrud.findByCompanyName(companyName);
-        if(companyList.isEmpty()){
-             return "Not Found";
+    public String checkCompanyName(String companyName) {
+        List<Company> companyList = companyCrud.findByCompanyName(companyName);
+        if (companyList.isEmpty()) {
+            return "Not Found";
         }
         return companyList.get(0).getCompanyId();
     }
-    
-    
-    
+
+    @Override
+    public String isCompanyIdAvailable(String companyId,String companyName) {
+        try{
+           Company company = companyCrud.getOne(companyId);
+            System.out.println(company);
+            if(company.getCompanyName().equals(companyName))
+                return "No";
+              return "Yes";
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            return "No";
+        }
+    }
+
 }

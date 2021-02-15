@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Displaying all department</title>
+        <style>
+            .container{
+                margin : auto;
+                margin-top : 70px;
+                width: 500px
+            }
+            table{
+                font-family: arial, sans-serif;
+                border-collapse: collapse;
+            }
+            td, th {
+                border: 1px solid #dddddd;
+                text-align: left;
+                padding: 8px;
+            }
+        </style>
+    </head>
+    <body>
+        <table id="myData" class="container"  >
+            <tr>
+                <th> Employee Name</th>
+                <th> Employee Id </th>
+            </tr> 
+        </table>
+            <script>
+                fetch('/employee/getAllEmployee')
+                        .then(function (response) {
+                            return response.json();
+                        })
+                        .then(function (data) {
+                            appendData(data);
+                        })
+                        .catch(function (err) {
+                            console.log('error: ' + err);
+                        });
+                function appendData(data) {
+                    var mainContainer = document.getElementById("myData");
+                       for (var i = 0; i < data.length; i++) {
+                    var table = document.createElement("tr");
+                    table.innerHTML = '<tr> <td> ' + data[i].employeeName + ' </td><td> ' + data[i].employeeId + '</td></tr>'
+                    mainContainer.appendChild(table);
+                }
+            }
+            </script>
+    </body>
+</html>

@@ -5,13 +5,9 @@
  */
 package com.springboot.New.state;
 
-import java.util.List;
-import org.springframework.stereotype.Repository;
-
 /**
  *
  * @author oss
  */
-
 public interface StateDao {
 }

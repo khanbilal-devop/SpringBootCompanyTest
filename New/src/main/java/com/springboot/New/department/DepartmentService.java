@@ -12,7 +12,13 @@ import java.util.List;
  * @author oss
  */
 public interface DepartmentService {
-    
-  public void save(Department department,String departmentCompanyId);
+
+    public void saveDepartment(Department department, String departmentCompanyId);
+
     public String findIdByDepartmentName(String departmentName);
+
+    public List<Department> getAllDepartment();
+
+    public String isDepartmentIdAvailable(String departmentId,String departmentName);
+
 }

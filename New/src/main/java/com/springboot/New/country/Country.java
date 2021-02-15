@@ -15,10 +15,10 @@ import javax.persistence.OneToMany;
 /**
  *
  * @author oss
- */ 
+ */
 @Entity
 public class Country {
-    
+
     @Id
     private String countryId;
     private String countryName;
@@ -28,7 +28,7 @@ public class Country {
     public Country() {
     }
 
-    public Country(String countryId, String countryName,List<State> countryStateList) {
+    public Country(String countryId, String countryName, List<State> countryStateList) {
         this.countryId = countryId;
         this.countryName = countryName;
         this.countryStateList = countryStateList;
@@ -62,8 +62,5 @@ public class Country {
     public void setCountryStateList(List<State> countryStateList) {
         this.countryStateList = countryStateList;
     }
-    
-    
-            
-    
+
 }

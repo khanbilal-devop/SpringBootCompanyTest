@@ -7,16 +7,15 @@ package com.springboot.New.department;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author oss
- */ 
+ */
 @Repository
-public interface DepartmentCrud extends JpaRepository<Department, String>{
-    
+public interface DepartmentCrud extends JpaRepository<Department, String> {
+
     public List<Department> findBydepartmentName(String departmentName);
-    
+
 }

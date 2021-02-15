@@ -11,9 +11,10 @@ import javax.persistence.Id;
 /**
  *
  * @author oss
- */ 
+ */
 @Entity
-public class Employee{
+public class Employee {
+
     @Id
     private String employeeId;
     private String employeeName;
@@ -23,23 +24,17 @@ public class Employee{
     private String employeeMailId;
     private String employeeHobby;
 
-    
-    
     public Employee() {
     }
-    
 
-    public Employee(String employeeId, String employeeName, String employeeCompanyId, String employeeDepartmentId) {
+    public Employee(String employeeId, String employeeName, String employeeCompanyId, String employeeDepartmentId, String employeeGender, String employeeMailId, String employeeHobby) {
         this.employeeId = employeeId;
         this.employeeName = employeeName;
         this.employeeCompanyId = employeeCompanyId;
         this.employeeDepartmentId = employeeDepartmentId;
-    }
-    
-    
-
-    public String getemployeeId() {
-        return employeeId;
+        this.employeeGender = employeeGender;
+        this.employeeMailId = employeeMailId;
+        this.employeeHobby = employeeHobby;
     }
 
     public void setemployeeId(String employeeId) {
@@ -101,5 +96,10 @@ public class Employee{
     public void setEmployeeHobby(String employeeHobby) {
         this.employeeHobby = employeeHobby;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Employee{" + "employeeId=" + employeeId + ", employeeName=" + employeeName + ", employeeCompanyId=" + employeeCompanyId + ", employeeDepartmentId=" + employeeDepartmentId + ", employeeGender=" + employeeGender + ", employeeMailId=" + employeeMailId + ", employeeHobby=" + employeeHobby + '}';
+    }
+
 }

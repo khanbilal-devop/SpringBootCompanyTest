@@ -8,9 +8,7 @@ package com.springboot.New.department;
 import com.springboot.New.comapny.Company;
 import com.springboot.New.comapny.CompanyCrud;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -29,7 +27,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
     DepartmentCrud departmentCrud;
 
     @Override
-    public void save(Department department, String departmentCompanyId) {
+    public void saveDepartment(Department department, String departmentCompanyId) {
         Company company = companyCrud.getOne(departmentCompanyId);
         company.getCompanyDepartmentList().add(department);
         companyCrud.save(company);
@@ -39,11 +37,27 @@ public class DepartmentDaoImpl implements DepartmentDao {
     public String findIdByDepartmentName(String departmentName) {
         List<Department> departmentList = departmentCrud.findBydepartmentName(departmentName);
         if (departmentList.isEmpty()) {
-             return "Not Found";
-             
+            return "Not Found";
+        } else {
+            return departmentList.get(0).getDepartmentId();
         }
-        else{
-        return departmentList.get(0).getDepartmentId();
+    }
+
+    @Override
+    public List<Department> getAllDepartment() {
+        return departmentCrud.findAll();
+    }
+
+    public String isDepartmentIdAvailable(String departmentId,String departmentName) {
+        try{ Department department = departmentCrud.getOne(departmentId);
+             System.out.println(department);
+             if(department.getDepartmentName().equals(departmentName))
+                   return "No";
+              return "Yes";
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            return "No";
         }
     }
 }

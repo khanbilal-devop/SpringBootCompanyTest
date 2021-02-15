@@ -10,7 +10,5 @@ package com.springboot.New.state;
  * @author oss
  */
 public interface StateService {
-    
 
-    
 }

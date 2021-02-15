@@ -5,7 +5,6 @@
  */
 package com.springboot.New.comapny;
 
-import com.springboot.New.*;
 import com.springboot.New.department.Department;
 import java.util.List;
 
@@ -14,9 +13,14 @@ import java.util.List;
  * @author oss
  */
 public interface CompanyService {
-    
-    public Company save(Company company);
+
+    public Company saveCompany(Company company);
+
     public List<Company> getAllCompany();
+
     public List<Department> getAllDepartmentByCompanyId(String companyId);
+
     public String checkCompanyName(String companyName);
+    
+    public String isCompanyIdAvailable(String companyId,String companyName);
 }

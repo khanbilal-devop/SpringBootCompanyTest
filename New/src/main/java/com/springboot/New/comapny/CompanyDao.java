@@ -14,9 +14,14 @@ import java.util.List;
  * @author oss
  */
 public interface CompanyDao {
-    
-    public Company save(Company company);
+
+    public Company saveCompany(Company company);
+
     public List<Company> getAllCompany();
+
     public List<Department> getAllDepartmentByCompanyId(String companyId);
+
     public String checkCompanyName(String companyName);
+    
+    public String isCompanyIdAvailable(String companyId,String companyName);
 }

@@ -13,9 +13,12 @@ import java.util.List;
  * @author oss
  */
 public interface CountryService {
-    
+
     public void saveAllCountry();
+
     public List<Country> createCountry();
+
     public List<Country> getAllCountry();
+
     public List<State> checkCountryId(String countryId);
 }

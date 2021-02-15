@@ -12,7 +12,12 @@ import java.util.List;
  * @author oss
  */
 public interface DepartmentDao {
-    
-    public void save(Department department,String company);
+
+    public void saveDepartment(Department department, String company);
+
     public String findIdByDepartmentName(String departmentName);
+    
+    public List<Department> getAllDepartment();
+    
+    public String isDepartmentIdAvailable(String departmentId,String departmentName);
 }

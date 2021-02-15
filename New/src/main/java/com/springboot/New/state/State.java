@@ -14,7 +14,7 @@ import javax.persistence.Id;
  */
 @Entity
 public class State {
-    
+
     @Id
     private String stateId;
     private String stateName;
@@ -47,6 +47,5 @@ public class State {
     public String toString() {
         return "State{" + "stateId=" + stateId + ", stateName=" + stateName + '}';
     }
-    
-    
+
 }
